@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>help.debs | Destrave sua conversação em inglês</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap');
+    
+    * {
+      font-family: 'Trebuchet MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Windows XP Style Window */
+    .xp-window {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 
+        0 0 0 1px rgba(0,0,0,0.1),
+        2px 2px 10px rgba(108, 52, 146, 0.3),
+        inset 0 0 0 1px rgba(255,255,255,0.5);
+    }
+    
+    .xp-titlebar {
+      background: linear-gradient(180deg, #9d6bb8 0%, #6c3492 50%, #5a2a7a 100%);
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 28px;
+    }
+    
+    .xp-titlebar-text {
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    }
+    
+    .xp-buttons {
+      display: flex;
+      gap: 2px;
+    }
+    
+    .xp-btn {
+      width: 21px;
+      height: 21px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      border: 1px solid;
+    }
+    
+    .xp-btn-minimize {
+      background: linear-gradient(180deg, #e8e8e8 0%, #d4d4d4 50%, #c0c0c0 100%);
+      border-color: #fff #888 #888 #fff;
+      color: #000;
+    }
+    
+    .xp-btn-maximize {
+      background: linear-gradient(180deg, #e8e8e8 0%, #d4d4d4 50%, #c0c0c0 100%);
+      border-color: #fff #888 #888 #fff;
+      color: #000;
+    }
+    
+    .xp-btn-close {
+      background: linear-gradient(180deg, #ff9898 0%, #cc4444 50%, #aa2222 100%);
+      border-color: #ffcccc #882222 #882222 #ffcccc;
+      color: #fff;
+    }
+    
+    .xp-content {
+      background: linear-gradient(135deg, #f5f0fa 0%, #ebe0f5 100%);
+      border: 2px solid;
+      border-color: #d0c0e0 #a080c0 #a080c0 #d0c0e0;
+    }
+    
+    /* Glossy Y2K Button */
+    .y2k-button {
+      background: linear-gradient(180deg, #9d6bb8 0%, #6c3492 50%, #5a2a7a 100%);
+      border: 2px solid;
+      border-color: #b88dd0 #3d1a5a #3d1a5a #b88dd0;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+      box-shadow: 
+        0 4px 15px rgba(108, 52, 146, 0.4),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .y2k-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 100%);
+      border-radius: 4px 4px 50% 50%;
+    }
+    
+    .y2k-button:hover {
+      background: linear-gradient(180deg, #b88dd0 0%, #7c4aa2 50%, #6a3a8a 100%);
+      transform: translateY(-2px);
+      box-shadow: 
+        0 6px 20px rgba(108, 52, 146, 0.5),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+    
+    .y2k-button:active {
+      transform: translateY(0);
+      box-shadow: 
+        0 2px 8px rgba(108, 52, 146, 0.4),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    
+    /* Tech Grid Background */
+    .tech-grid {
+      background-image: 
+        linear-gradient(rgba(108, 52, 146, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108, 52, 146, 0.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    
+    /* Glowing Text Effect */
+    .glow-text {
+      text-shadow: 
+        0 0 10px rgba(108, 52, 146, 0.5),
+        0 0 20px rgba(108, 52, 146, 0.3),
+        0 0 30px rgba(108, 52, 146, 0.2);
+    }
+    
+    /* Card Hover Effect */
+    .method-card {
+      transition: all 0.3s ease;
+    }
+    
+    .method-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 0 0 1px rgba(0,0,0,0.1),
+        4px 4px 20px rgba(108, 52, 146, 0.4),
+        inset 0 0 0 1px rgba(255,255,255,0.5);
+    }
+    
+    /* Scanline Effect */
+    .scanlines::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(108, 52, 146, 0.03) 2px,
+        rgba(108, 52, 146, 0.03) 4px
+      );
+      pointer-events: none;
+    }
+    
+    /* Step Number Style */
+    .step-number {
+      background: linear-gradient(180deg, #9d6bb8 0%, #6c3492 100%);
+      box-shadow: 
+        2px 2px 8px rgba(108, 52, 146, 0.3),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+    
+    /* Scrollbar XP Style */
+    ::-webkit-scrollbar {
+      width: 17px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: linear-gradient(90deg, #f0f0f0 0%, #e0e0e0 50%, #f0f0f0 100%);
+      border: 1px solid #ccc;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, #9d6bb8 0%, #6c3492 50%, #5a2a7a 100%);
+      border: 1px solid;
+      border-color: #b88dd0 #3d1a5a #3d1a5a #b88dd0;
+      border-radius: 2px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(90deg, #b88dd0 0%, #7c4aa2 50%, #6a3a8a 100%);
+    }
+    
+    /* Floating Animation */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    /* Pulse Glow */
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(108, 52, 146, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(108, 52, 146, 0.6); }
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    /* About Header Carousel */
+    .about-header-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1.15fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .about-carousel-shell {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .about-carousel-frame {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(203, 176, 232, 0.45), rgba(233, 220, 248, 0.8));
+      border: 2px solid rgba(164, 116, 205, 0.35);
+      box-shadow:
+        0 10px 30px rgba(108, 52, 146, 0.16),
+        inset 0 1px 0 rgba(255,255,255,0.65);
+      aspect-ratio: 4 / 3;
+    }
+
+    .about-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    .about-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .about-slide-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #6c3492;
+      text-align: center;
+      padding: 18px;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.65), transparent 38%),
+        linear-gradient(135deg, #eadcf8 0%, #d8c3ee 100%);
+    }
+
+    .about-slide-placeholder .emoji {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .about-slide-placeholder .title {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .about-slide-placeholder .subtitle {
+      font-size: 12px;
+      margin-top: 6px;
+      opacity: 0.8;
+    }
+
+    .about-carousel-nav {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      pointer-events: none;
+    }
+
+    .about-nav-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid rgba(108, 52, 146, 0.2);
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6c3492;
+      box-shadow: 0 6px 20px rgba(108, 52, 146, 0.16);
+      transition: all 0.2s ease;
+      pointer-events: auto;
+    }
+
+    .about-nav-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 8px 24px rgba(108, 52, 146, 0.22);
+    }
+
+    .about-caption {
+      margin-top: 12px;
+      min-height: 52px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(164, 116, 205, 0.22);
+      color: #6c3492;
+      font-size: 14px;
+      line-height: 1.45;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+    }
+
+    .about-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: center;
+    }
+
+    .about-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(108, 52, 146, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .about-dot.active {
+      width: 20px;
+      background: #8c58b7;
+    }
+
+    .about-copy-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.58);
+      border: 1px solid rgba(164, 116, 205, 0.22);
+      color: #7b42a7;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .about-copy-title {
+      font-size: clamp(1.55rem, 2vw, 2rem);
+      line-height: 1.1;
+      font-weight: 700;
+      color: #5c2385;
+      margin-bottom: 14px;
+    }
+
+    .about-copy-text {
+      color: #6a2ea1;
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 540px;
+    }
+
+    @media (max-width: 768px) {
+      .about-header-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .about-carousel-shell {
+        max-width: 100%;
+      }
+
+      .about-copy-title {
+        font-size: 1.7rem;
+      }
+
+      .about-caption {
+        min-height: auto;
+      }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto">
+  <div id="app-wrapper" class="w-full min-h-full bg-gradient-to-br from-purple-50 via-violet-100 to-purple-200 tech-grid relative">
+   <div class="fixed top-20 left-10 w-20 h-20 rounded-full bg-purple-300 opacity-20 blur-2xl float-animation"></div>
+   <div class="fixed bottom-40 right-10 w-32 h-32 rounded-full bg-violet-400 opacity-20 blur-3xl float-animation" style="animation-delay: 1s;"></div>
+   <div class="fixed top-1/2 left-1/4 w-16 h-16 rounded-full bg-purple-500 opacity-10 blur-xl float-animation" style="animation-delay: 2s;"></div>
+
+   <!-- About Section -->
+   <section class="relative z-10 px-4 py-6 md:py-8">
+    <div class="max-w-5xl mx-auto">
+     <div class="xp-window">
+      <div class="xp-titlebar">
+       <span class="xp-titlebar-text">help.debs — sobre mim</span>
+       <div class="xp-buttons">
+        <div class="xp-btn xp-btn-minimize">_</div>
+        <div class="xp-btn xp-btn-maximize">□</div>
+        <div class="xp-btn xp-btn-close">✕</div>
+       </div>
+      </div>
+
+      <div class="xp-content p-5 md:p-7">
+        <div class="about-header-grid">
+          
+          <div class="about-carousel-shell">
+            <div class="about-carousel-frame" id="about-carousel-frame">
+              
+              <div class="about-slide active">
+                <div class="about-slide-placeholder">
+                  <div class="emoji">📸</div>
+                  <div class="title">FOTO 1</div>
+                  <div class="subtitle">Substitua pelo caminho da imagem depois</div>
+                </div>
+              </div>
+
+              <div class="about-slide">
+                <div class="about-slide-placeholder">
+                  <div class="emoji">📸</div>
+                  <div class="title">FOTO 2</div>
+                  <div class="subtitle">Substitua pelo caminho da imagem depois</div>
+                </div>
+              </div>
+
+              <div class="about-slide">
+                <div class="about-slide-placeholder">
+                  <div class="emoji">📸</div>
+                  <div class="title">FOTO 3</div>
+                  <div class="subtitle">Substitua pelo caminho da imagem depois</div>
+                </div>
+              </div>
+
+              <div class="about-slide">
+                <div class="about-slide-placeholder">
+                  <div class="emoji">📸</div>
+                  <div class="title">FOTO 4</div>
+                  <div class="subtitle">Substitua pelo caminho da imagem depois</div>
+                </div>
+              </div>
+
+              <div class="about-slide">
+                <div class="about-slide-placeholder">
+                  <div class="emoji">📸</div>
+                  <div class="title">FOTO 5</div>
+                  <div class="subtitle">Substitua pelo caminho da imagem depois</div>
+                </div>
+              </div>
+
+              <div class="about-carousel-nav">
+                <button class="about-nav-btn" id="about-prev" aria-label="Foto anterior" type="button">
+                  <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <button class="about-nav-btn" id="about-next" aria-label="Próxima foto" type="button">
+                  <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="about-caption" id="about-caption">
+              Começando a dar aula.
+            </div>
+
+            <div class="about-dots" id="about-dots">
+              <span class="about-dot active"></span>
+              <span class="about-dot"></span>
+              <span class="about-dot"></span>
+              <span class="about-dot"></span>
+              <span class="about-dot"></span>
+            </div>
+          </div>
+
+          <div>
+            <div class="about-copy-kicker">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>quem está por trás do help.debs?</span>
+            </div>
+
+            <h2 class="about-copy-title">
+              Minha história ensinando inglês também faz parte do método.
+            </h2>
+
+            <p id="about-bio" class="about-copy-text">
+              Sou Débora, professora de inglês e criadora do help.debs. Apaixonada por desenvolvimento pessoal desde os meus 19 anos. Hoje eu estudo Engenharia de Software e meu maior objetivo é unir tecnologia e PNL para acelerar os ressudado das minhas alunas.<br><br>
+              Criei esse espaço para ajudar mulheres sonhadoras que entendem inglês, mas travam quando precisam falar.<br><br>
+              Hoje, ensino inglês com foco em conversação real, prática guiada e inteligência artificial.
+            </p>
+          </div>
+
+        </div>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <!-- Hero Section -->
+   <section class="relative z-10 px-4 py-8 md:py-16">
+    <div class="max-w-4xl mx-auto">
+     <div class="xp-window scanlines">
+      <div class="xp-titlebar">
+       <span class="xp-titlebar-text">🚀 Desbloqueie seu Inglês.exe</span>
+       <div class="xp-buttons">
+        <div class="xp-btn xp-btn-minimize">_</div>
+        <div class="xp-btn xp-btn-maximize">□</div>
+        <div class="xp-btn xp-btn-close">✕</div>
+       </div>
+      </div>
+      <div class="xp-content p-6 md:p-10 text-center relative">
+       <div class="mb-6">
+        <span class="inline-block px-3 py-1 bg-purple-200 text-purple-800 rounded-full text-sm font-medium border border-purple-300"> ✨ Método com Inteligência Artificial </span>
+       </div>
+       <h1 id="hero-headline" class="text-2xl md:text-4xl lg:text-5xl font-bold text-purple-900 mb-6 leading-tight glow-text">Entende inglês, mas trava quando precisa falar?</h1>
+       <p id="hero-subheadline" class="text-lg md:text-xl text-purple-700 mb-8 max-w-2xl mx-auto leading-relaxed">Eu ajudo mulheres sonhadoras a transformar inglês passivo em conversação real usando prática guiada e inteligência artificial.</p>
+       <a id="hero-cta-link" href="https://wa.me/SEU_NUMERO_AQUI?text=Olá%21%20Vim%20do%20Instagram%20e%20gostaria%20de%20saber%20mais%20sobre%20as%20suas%20aulas." target="_blank" rel="noopener noreferrer" class="y2k-button inline-flex items-center gap-3 px-8 py-4 text-lg md:text-xl pulse-glow">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
+        <span id="cta-button-text">Destravar minha conversação</span>
+       </a>
+       <div class="mt-8 flex justify-center gap-4 flex-wrap">
+        <div class="flex items-center gap-2 text-purple-600 text-sm">
+         <i data-lucide="check-circle" class="w-4 h-4"></i> <span>100% Online</span>
+        </div>
+        <div class="flex items-center gap-2 text-purple-600 text-sm">
+         <i data-lucide="check-circle" class="w-4 h-4"></i> <span>Prática com IA</span>
+        </div>
+        <div class="flex items-center gap-2 text-purple-600 text-sm">
+         <i data-lucide="check-circle" class="w-4 h-4"></i> <span>Resultados Rápidos</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <!-- Problem Section -->
+   <section class="relative z-10 px-4 py-8 md:py-12">
+    <div class="max-w-4xl mx-auto">
+     <div class="xp-window">
+      <div class="xp-titlebar">
+       <span class="xp-titlebar-text">⚠️ diagnostic.exe - Identificando o Problema</span>
+       <div class="xp-buttons">
+        <div class="xp-btn xp-btn-minimize">_</div>
+        <div class="xp-btn xp-btn-maximize">□</div>
+        <div class="xp-btn xp-btn-close">✕</div>
+       </div>
+      </div>
+      <div class="xp-content p-6 md:p-8">
+       <h2 class="text-xl md:text-2xl font-bold text-purple-900 mb-6 text-center">Você se identifica com isso?</h2>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="flex items-start gap-3 p-4 bg-white bg-opacity-60 rounded-lg border border-purple-200">
+         <div class="w-6 h-6 rounded bg-yellow-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+          <i data-lucide="alert-triangle" class="w-4 h-4 text-yellow-800"></i>
+         </div>
+         <div>
+          <p class="text-purple-800 font-medium">Entendo inglês</p>
+          <p class="text-purple-600 text-sm">Assisto séries, leio textos, escuto músicas...</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3 p-4 bg-white bg-opacity-60 rounded-lg border border-purple-200">
+         <div class="w-6 h-6 rounded bg-orange-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+          <i data-lucide="clock" class="w-4 h-4 text-orange-800"></i>
+         </div>
+         <div>
+          <p class="text-purple-800 font-medium">Mas preciso pensar antes de responder</p>
+          <p class="text-purple-600 text-sm">Traduzo mentalmente cada frase...</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3 p-4 bg-white bg-opacity-60 rounded-lg border border-purple-200">
+         <div class="w-6 h-6 rounded bg-red-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+          <i data-lucide="x-circle" class="w-4 h-4 text-red-800"></i>
+         </div>
+         <div>
+          <p class="text-purple-800 font-medium">Travo em conversas</p>
+          <p class="text-purple-600 text-sm">A ansiedade aparece na hora de falar...</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3 p-4 bg-white bg-opacity-60 rounded-lg border border-purple-200">
+         <div class="w-6 h-6 rounded bg-purple-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+          <i data-lucide="frown" class="w-4 h-4 text-purple-800"></i>
+         </div>
+         <div>
+          <p class="text-purple-800 font-medium">Sinto que o inglês não sai natural</p>
+          <p class="text-purple-600 text-sm">Parece robótico, forçado...</p>
+         </div>
+        </div>
+       </div>
+       <div class="mt-6 p-4 bg-purple-100 rounded-lg border-2 border-dashed border-purple-300 text-center">
+        <p class="text-purple-800 font-medium"><i data-lucide="lightbulb" class="w-5 h-5 inline mr-2"></i> Isso acontece porque seu inglês ainda é <strong>passivo</strong>. Você <em>recebe</em> bem, mas não <em>produz</em> automaticamente.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <!-- Method Section -->
+   <section class="relative z-10 px-4 py-8 md:py-12">
+    <div class="max-w-4xl mx-auto">
+     <h2 id="method-title" class="text-2xl md:text-3xl font-bold text-purple-900 mb-8 text-center glow-text">Como eu destravo a conversação</h2>
+     <div class="grid md:grid-cols-3 gap-6">
+      <div class="xp-window method-card">
+       <div class="xp-titlebar">
+        <span class="xp-titlebar-text">🔄 automatização.dll</span>
+        <div class="xp-buttons">
+         <div class="xp-btn xp-btn-close">✕</div>
+        </div>
+       </div>
+       <div class="xp-content p-5 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-gradient-to-br from-purple-400 to-purple-700 flex items-center justify-center shadow-lg">
+         <i data-lucide="repeat" class="w-8 h-8 text-white"></i>
+        </div>
+        <h3 class="text-lg font-bold text-purple-900 mb-2">Automatização</h3>
+        <p class="text-purple-700 text-sm leading-relaxed">Treinamos blocos de linguagem até que eles saiam automaticamente, sem pensar.</p>
+       </div>
+      </div>
+
+      <div class="xp-window method-card">
+       <div class="xp-titlebar">
+        <span class="xp-titlebar-text">💬 conversação.exe</span>
+        <div class="xp-buttons">
+         <div class="xp-btn xp-btn-close">✕</div>
+        </div>
+       </div>
+       <div class="xp-content p-5 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-gradient-to-br from-violet-400 to-violet-700 flex items-center justify-center shadow-lg">
+         <i data-lucide="messages-square" class="w-8 h-8 text-white"></i>
+        </div>
+        <h3 class="text-lg font-bold text-purple-900 mb-2">Conversação Guiada</h3>
+        <p class="text-purple-700 text-sm leading-relaxed">Você pratica conversa real com correção estratégica em tempo real.</p>
+       </div>
+      </div>
+
+      <div class="xp-window method-card">
+       <div class="xp-titlebar">
+        <span class="xp-titlebar-text">🤖 ai_practice.sys</span>
+        <div class="xp-buttons">
+         <div class="xp-btn xp-btn-close">✕</div>
+        </div>
+       </div>
+       <div class="xp-content p-5 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-gradient-to-br from-fuchsia-400 to-fuchsia-700 flex items-center justify-center shadow-lg">
+         <i data-lucide="sparkles" class="w-8 h-8 text-white"></i>
+        </div>
+        <h3 class="text-lg font-bold text-purple-900 mb-2">Inteligência Artificial</h3>
+        <p class="text-purple-700 text-sm leading-relaxed">Use IA para continuar praticando entre as aulas, 24/7.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <!-- How It Works Section -->
+   <section class="relative z-10 px-4 py-8 md:py-12">
+    <div class="max-w-4xl mx-auto">
+     <div class="xp-window">
+      <div class="xp-titlebar">
+       <span class="xp-titlebar-text">📋 tutorial.exe - Como Funciona</span>
+       <div class="xp-buttons">
+        <div class="xp-btn xp-btn-minimize">_</div>
+        <div class="xp-btn xp-btn-maximize">□</div>
+        <div class="xp-btn xp-btn-close">✕</div>
+       </div>
+      </div>
+      <div class="xp-content p-6 md:p-8">
+       <h2 class="text-xl md:text-2xl font-bold text-purple-900 mb-8 text-center">Comece em 3 passos simples</h2>
+       <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+        <div class="flex flex-col items-center text-center max-w-[200px]">
+         <div class="step-number w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-3">1</div>
+         <div class="flex items-center gap-2 mb-2">
+          <i data-lucide="mouse-pointer-click" class="w-5 h-5 text-purple-600"></i>
+          <p class="text-purple-900 font-bold">Clique no botão</p>
+         </div>
+         <p class="text-purple-600 text-sm">Aperte o botão verde aqui na página</p>
+        </div>
+
+        <div class="hidden md:block text-purple-400">
+         <i data-lucide="arrow-right" class="w-8 h-8"></i>
+        </div>
+        <div class="md:hidden text-purple-400">
+         <i data-lucide="arrow-down" class="w-8 h-8"></i>
+        </div>
+
+        <div class="flex flex-col items-center text-center max-w-[200px]">
+         <div class="step-number w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-3">2</div>
+         <div class="flex items-center gap-2 mb-2">
+          <i data-lucide="send" class="w-5 h-5 text-purple-600"></i>
+          <p class="text-purple-900 font-bold">Mande uma mensagem</p>
+         </div>
+         <p class="text-purple-600 text-sm">"Olá! Vim do Instagram e gostaria de saber mais sobre as suas aulas."</p>
+        </div>
+
+        <div class="hidden md:block text-purple-400">
+         <i data-lucide="arrow-right" class="w-8 h-8"></i>
+        </div>
+        <div class="md:hidden text-purple-400">
+         <i data-lucide="arrow-down" class="w-8 h-8"></i>
+        </div>
+
+        <div class="flex flex-col items-center text-center max-w-[200px]">
+         <div class="step-number w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-3">3</div>
+         <div class="flex items-center gap-2 mb-2">
+          <i data-lucide="gift" class="w-5 h-5 text-purple-600"></i>
+          <p class="text-purple-900 font-bold">Receba as informações</p>
+         </div>
+         <p class="text-purple-600 text-sm">Conheça o programa completo</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <!-- Final CTA Section -->
+   <section class="relative z-10 px-4 py-12 md:py-20">
+    <div class="max-w-4xl mx-auto">
+     <div class="xp-window">
+      <div class="xp-titlebar">
+       <span class="xp-titlebar-text">🎯 final_step.exe - Sua Vez!</span>
+       <div class="xp-buttons">
+        <div class="xp-btn xp-btn-minimize">_</div>
+        <div class="xp-btn xp-btn-maximize">□</div>
+        <div class="xp-btn xp-btn-close">✕</div>
+       </div>
+      </div>
+      <div class="xp-content p-8 md:p-12 text-center bg-gradient-to-br from-purple-100 to-violet-200">
+       <div class="inline-block mb-6 px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium border border-green-300">
+        ✅ Pronto para começar?
+       </div>
+       <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-purple-900 mb-6 glow-text">Chega de travar no inglês!</h2>
+       <p class="text-lg text-purple-700 mb-8 max-w-xl mx-auto">Dê o primeiro passo agora e descubra como transformar seu inglês passivo em conversação fluente.</p>
+       <a id="final-cta-link" href="https://wa.me/SEU_NUMERO_AQUI?text=Olá%21%20Vim%20do%20Instagram%20e%20gostaria%20de%20saber%20mais%20sobre%20as%20suas%20aulas." target="_blank" rel="noopener noreferrer" class="y2k-button inline-flex items-center gap-3 px-10 py-5 text-xl pulse-glow">
+        <i data-lucide="message-circle" class="w-7 h-7"></i>
+        <span>Quero destravar minha conversação</span>
+       </a>
+       <p class="mt-6 text-purple-600 text-sm flex items-center justify-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> Respondo pessoalmente todas as mensagens</p>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <!-- Footer -->
+   <footer class="relative z-10 px-4 py-6 border-t border-purple-200">
+    <div class="max-w-4xl mx-auto">
+     <div class="xp-window">
+      <div class="xp-titlebar">
+       <span class="xp-titlebar-text">ℹ️ about.txt</span>
+       <div class="xp-buttons">
+        <div class="xp-btn xp-btn-close">✕</div>
+       </div>
+      </div>
+      <div class="xp-content p-4 text-center">
+       <div class="flex items-center justify-center gap-2 mb-2">
+        <div class="w-6 h-6 rounded bg-gradient-to-br from-purple-400 to-purple-700 flex items-center justify-center">
+         <span class="text-white font-bold text-xs">h.d</span>
+        </div>
+        <span class="text-purple-800 font-bold">help.debs</span>
+       </div>
+       <p class="text-purple-600 text-sm">© 2024 help.debs — Todos os direitos reservados</p>
+       <p class="text-purple-500 text-xs mt-2 flex items-center justify-center gap-1"><i data-lucide="heart" class="w-3 h-3"></i> <span id="footer-text">♡ Feito para mulheres que sabem que o inglês pode abrir novas portas na carreira</span></p>
+      </div>
+     </div>
+    </div>
+   </footer>
+  </div>
+
+  <script>
+    const defaultConfig = {
+      about_bio: "Sou Débora, professora de inglês e criadora do help.debs.\n\nCriei esse espaço para ajudar mulheres brasileiras que entendem inglês, mas travam quando precisam falar.\n\nHoje, ensino inglês com foco em conversação real, prática guiada e inteligência artificial.",
+      hero_headline: "Entende inglês, mas trava quando precisa falar?",
+      hero_subheadline: "Eu ajudo mulheres brasileiras a transformar inglês passivo em conversação real usando prática guiada e inteligência artificial.",
+      cta_button_text: "Destravar minha conversação",
+      method_title: "Como eu destravo a conversação",
+      whatsapp_message: "Olá! Vim do Instagram e gostaria de saber mais sobre as suas aulas.",
+      footer_text: "♡ Feito para mulheres que sabem que o inglês pode abrir novas portas na carreira",
+      primary_color: "#6c3492",
+      secondary_color: "#9d6bb8",
+      background_color: "#f5f0fa",
+      text_color: "#581c87",
+      accent_color: "#a855f7"
+    };
+    
+    lucide.createIcons();
+
+    // About carousel
+    const aboutSlides = document.querySelectorAll('.about-slide');
+    const aboutDots = document.querySelectorAll('.about-dot');
+    const aboutCaption = document.getElementById('about-caption');
+    const aboutPrev = document.getElementById('about-prev');
+    const aboutNext = document.getElementById('about-next');
+
+    const aboutCaptions = [
+      "Começando a dar aula.",
+      "Uma fase ensinando crianças.",
+      "Dando aulas online.",
+      "Construindo minha metodologia.",
+      "Hoje, com o help.debs."
+    ];
+
+    let aboutIndex = 0;
+
+    function updateAboutCarousel(index) {
+      aboutSlides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+
+      aboutDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+
+      if (aboutCaption) {
+        aboutCaption.textContent = aboutCaptions[index];
+      }
+    }
+
+    if (aboutPrev && aboutNext && aboutSlides.length) {
+      aboutPrev.addEventListener('click', () => {
+        aboutIndex = (aboutIndex - 1 + aboutSlides.length) % aboutSlides.length;
+        updateAboutCarousel(aboutIndex);
+      });
+
+      aboutNext.addEventListener('click', () => {
+        aboutIndex = (aboutIndex + 1) % aboutSlides.length;
+        updateAboutCarousel(aboutIndex);
+      });
+    }
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const aboutBio = document.getElementById('about-bio');
+          if (aboutBio) {
+            aboutBio.innerHTML = (config.about_bio || defaultConfig.about_bio).replace(/\n\n/g, '<br><br>');
+          }
+          
+          const heroHeadline = document.getElementById('hero-headline');
+          if (heroHeadline) {
+            heroHeadline.textContent = config.hero_headline || defaultConfig.hero_headline;
+          }
+          
+          const heroSubheadline = document.getElementById('hero-subheadline');
+          if (heroSubheadline) {
+            heroSubheadline.textContent = config.hero_subheadline || defaultConfig.hero_subheadline;
+          }
+          
+          const ctaButtonText = document.getElementById('cta-button-text');
+          if (ctaButtonText) {
+            ctaButtonText.textContent = config.cta_button_text || defaultConfig.cta_button_text;
+          }
+          
+          const methodTitle = document.getElementById('method-title');
+          if (methodTitle) {
+            methodTitle.textContent = config.method_title || defaultConfig.method_title;
+          }
+          
+          const footerText = document.getElementById('footer-text');
+          if (footerText) {
+            footerText.textContent = config.footer_text || defaultConfig.footer_text;
+          }
+          
+          const whatsappMessage = config.whatsapp_message || defaultConfig.whatsapp_message;
+          const encodedMessage = encodeURIComponent(whatsappMessage);
+
+          const finalCTALink = document.getElementById('final-cta-link');
+          if (finalCTALink) {
+            finalCTALink.href = `https://wa.me/SEU_NUMERO_AQUI?text=${encodedMessage}`;
+          }
+
+          const heroCTALink = document.getElementById('hero-cta-link');
+          if (heroCTALink) {
+            heroCTALink.href = `https://wa.me/SEU_NUMERO_AQUI?text=${encodedMessage}`;
+          }
+          
+          const primaryColor = config.primary_color || defaultConfig.primary_color;
+          const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+          const backgroundColor = config.background_color || defaultConfig.background_color;
+          const textColor = config.text_color || defaultConfig.text_color;
+          const accentColor = config.accent_color || defaultConfig.accent_color;
+          
+          document.documentElement.style.setProperty('--primary-color', primaryColor);
+          document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+          document.documentElement.style.setProperty('--background-color', backgroundColor);
+          document.documentElement.style.setProperty('--text-color', textColor);
+          document.documentElement.style.setProperty('--accent-color', accentColor);
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["about_bio", config.about_bio || defaultConfig.about_bio],
+          ["hero_headline", config.hero_headline || defaultConfig.hero_headline],
+          ["hero_subheadline", config.hero_subheadline || defaultConfig.hero_subheadline],
+          ["cta_button_text", config.cta_button_text || defaultConfig.cta_button_text],
+          ["method_title", config.method_title || defaultConfig.method_title],
+          ["whatsapp_message", config.whatsapp_message || defaultConfig.whatsapp_message],
+          ["footer_text", config.footer_text || defaultConfig.footer_text]
+        ])
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d82856b31669c9a',t:'MTc3MjgxMjI3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
