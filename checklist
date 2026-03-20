@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vocabulary Checklist - English Class</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --screen-bg: #d8d3df;
+      --window-border-light: #faf7ff;
+      --window-border-dark: #8b7fe8;
+      --title-purple: #7569ef;
+      --title-pink: #ee9ac7;
+      --panel: #efe8f6;
+      --panel-soft: #f7f2fb;
+      --card-pink: #efb1d3;
+      --card-pink-dark: #ca6ea5;
+      --card-lilac: #c9c1ff;
+      --ink: #675cda;
+      --ink-soft: #867be7;
+      --ink-dark: #4f45b8;
+      --text: #6257d0;
+      --muted: #8277df;
+      --white: #ffffff;
+      --shadow: rgba(73, 54, 150, 0.16);
+      --prompt-bg: #fffafc;
+      --prompt-border: #c985b1;
+      --prompt-text: #57427f;
+      --content-max: 1100px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--screen-bg);
+      color: var(--text);
+      font-family: 'Inter', Tahoma, Geneva, sans-serif;
+    }
+
+    button, input, textarea { font: inherit; }
+
+    .app-shell {
+      min-height: 100vh;
+      padding: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .desktop-window {
+      width: min(100%, var(--content-max));
+      background: #e8e3ee;
+      border: 2px solid;
+      border-color: var(--window-border-light) var(--window-border-dark) var(--window-border-dark) var(--window-border-light);
+      box-shadow: 0 18px 40px var(--shadow), inset 1px 1px 0 #fff;
+    }
+
+    .title-bar {
+      height: 34px;
+      background: linear-gradient(90deg, var(--title-purple), #7d72f0 48%, var(--title-pink));
+      border-bottom: 2px solid rgba(255,255,255,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      color: #fff;
+      font-family: 'VT323', monospace;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 4px;
+    }
+
+    .window-control {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(120, 85, 178, 0.85);
+      background: #f7c3dd;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.7);
+      display: grid;
+      place-items: center;
+      color: #7a4db1;
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .window-tabs {
+      display: flex;
+      gap: 18px;
+      padding: 8px 12px 6px;
+      background: #ebe7f0;
+      font-family: 'VT323', monospace;
+      font-size: 18px;
+      letter-spacing: 0.03em;
+      border-bottom: 2px solid rgba(115, 101, 232, 0.24);
+      flex-wrap: wrap;
+    }
+
+    .window-tab {
+      color: var(--ink);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .window-tab.active {
+      color: #fff;
+      background: linear-gradient(90deg, var(--title-purple), var(--title-pink));
+      padding: 1px 8px;
+      border-radius: 999px;
+    }
+
+    .window-body {
+      margin: 10px;
+      background: var(--panel);
+      border: 2px solid rgba(115, 101, 232, 0.66);
+      min-height: 700px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .screen {
+      display: none;
+      flex: 1;
+      padding: 28px;
+      gap: 24px;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-panel,
+    .side-card,
+    .category-card,
+    .detail-card,
+    .prompt-card,
+    .vocab-chip,
+    .pixel-button,
+    .mini-info,
+    .steps-card {
+      border: 2px solid;
+      border-color: rgba(255,255,255,0.85) rgba(115, 101, 232, 0.7) rgba(115, 101, 232, 0.7) rgba(255,255,255,0.85);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .hero-panel {
+      background: linear-gradient(180deg, #f5eefb 0%, #ecdef6 100%);
+      padding: 28px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 260px;
+    }
+
+    .hero-kicker,
+    .section-label,
+    .mini-label,
+    .category-index,
+    .step-number,
+    .vocab-label {
+      font-family: 'VT323', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-kicker {
+      font-size: 24px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .hero-title,
+    .detail-headline {
+      font-family: 'VT323', monospace;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 0.92;
+      margin: 0;
+    }
+
+    .hero-title {
+      font-size: clamp(56px, 9vw, 104px);
+      text-align: center;
+    }
+
+    .hero-subtitle {
+      margin-top: 10px;
+      text-align: center;
+      font-family: 'VT323', monospace;
+      font-size: 28px;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+
+    .hero-cta-row {
+      margin-top: 22px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pixel-button {
+      background: linear-gradient(180deg, #f7bdd8, #e99ec8);
+      color: #fff;
+      padding: 9px 18px;
+      cursor: pointer;
+      font-family: 'VT323', monospace;
+      font-size: 24px;
+      letter-spacing: 0.04em;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 120ms ease, filter 120ms ease;
+      text-transform: uppercase;
+    }
+
+    .pixel-button:hover { filter: brightness(1.03); }
+    .pixel-button:active { transform: translateY(1px); }
+
+    .pixel-button.secondary {
+      background: linear-gradient(180deg, #9b8ef8, #7567ec);
+    }
+
+    .pixel-button.ghost {
+      background: linear-gradient(180deg, #fbf7ff, #f1e8f8);
+      color: var(--ink);
+    }
+
+    .side-card {
+      background: linear-gradient(180deg, #f4c5de 0%, #efb1d3 100%);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 260px;
+    }
+
+    .side-card .section-label {
+      font-size: 22px;
+      color: rgba(255,255,255,0.95);
+    }
+
+    .side-card p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.55;
+      color: #fff;
+      max-width: 28ch;
+    }
+
+    .cursor-mark {
+      align-self: flex-end;
+      font-size: 42px;
+      color: #fff;
+    }
+
+    .categories-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .section-label {
+      font-size: 26px;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .section-copy {
+      max-width: 60ch;
+      margin: 0;
+      line-height: 1.6;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .mini-info-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .mini-info {
+      background: var(--panel-soft);
+      padding: 10px 14px;
+      min-width: 140px;
+    }
+
+    .mini-label {
+      display: block;
+      color: var(--ink);
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+
+    .mini-value {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .categories-grid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .category-card {
+      background: linear-gradient(180deg, #f3bad7 0%, #e7a4cc 100%);
+      padding: 14px;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 18px rgba(128, 86, 191, 0.12), inset 1px 1px 0 rgba(255,255,255,0.72);
+    }
+
+    .category-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .category-index {
+      color: rgba(255,255,255,0.82);
+      font-size: 22px;
+    }
+
+    .category-icon {
+      font-size: 28px;
+    }
+
+    .category-title {
+      margin: 0;
+      color: #fff;
+      font-family: 'VT323', monospace;
+      font-size: 32px;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .category-meta {
+      margin: 0;
+      color: rgba(255,255,255,0.95);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+      height: calc(100vh - 260px);
+      max-height: 650px;
+    }
+
+    .detail-card,
+    .prompt-card {
+      padding: 18px;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .detail-card {
+      background: linear-gradient(180deg, #f8f3fc 0%, #efe5f7 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .prompt-card {
+      background: linear-gradient(180deg, #f5d0e2 0%, #efbfd8 100%);
+      color: var(--ink-dark);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .detail-headline {
+      font-size: clamp(34px, 5vw, 62px);
+    }
+
+    .detail-subcopy {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 56ch;
+    }
+
+    .detail-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      overflow-y: auto;
+      padding-right: 8px;
+      flex: 1;
+      min-height: 0;
+      scrollbar-width: thin;
+      scrollbar-color: #7f74ed #f4eff9;
+    }
+
+    .vocab-grid::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    .vocab-grid::-webkit-scrollbar-track {
+      background: #f4eff9;
+      border-left: 2px solid rgba(115, 101, 232, 0.55);
+      border-top: 2px solid rgba(255,255,255,0.75);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .vocab-grid::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #8f83f3 0%, #7f74ed 100%);
+      border: 2px solid;
+      border-color: rgba(255,255,255,0.78) rgba(115, 101, 232, 0.72) rgba(115, 101, 232, 0.72) rgba(255,255,255,0.78);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.35);
+    }
+
+    .vocab-grid::-webkit-scrollbar-button:single-button {
+      display: block;
+      height: 14px;
+      background: #7f74ed;
+      border: 2px solid;
+      border-color: rgba(255,255,255,0.75) rgba(115, 101, 232, 0.55) rgba(115, 101, 232, 0.55) rgba(255,255,255,0.75);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.25);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 7px 7px;
+    }
+
+    .vocab-grid::-webkit-scrollbar-button:single-button:vertical:decrement {
+      background-image: linear-gradient(135deg, transparent 50%, white 50%), linear-gradient(225deg, transparent 50%, white 50%);
+      background-position: calc(50% - 2px) 8px, calc(50% + 2px) 8px;
+      background-size: 6px 6px;
+    }
+
+    .vocab-grid::-webkit-scrollbar-button:single-button:vertical:increment {
+      background-image: linear-gradient(315deg, transparent 50%, white 50%), linear-gradient(45deg, transparent 50%, white 50%);
+      background-position: calc(50% - 2px) 3px, calc(50% + 2px) 3px;
+      background-size: 6px 6px;
+    }
+
+    .vocab-chip {
+      background: linear-gradient(180deg, #f7d6e8 0%, #f0c7de 100%);
+      padding: 14px 16px;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .vocab-label {
+      font-size: 19px;
+      color: rgba(103, 92, 218, 0.72);
+    }
+
+    .vocab-value {
+      font-family: 'VT323', monospace;
+      font-size: 28px;
+      line-height: 1.05;
+      color: var(--ink-dark);
+    }
+
+    .steps-card {
+      background: linear-gradient(180deg, #ece4ff 0%, #ddd2ff 100%);
+      padding: 16px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .steps-card.show { display: flex; }
+
+    .steps-title {
+      font-family: 'VT323', monospace;
+      font-size: 28px;
+      color: var(--ink-dark);
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .steps-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .step-item {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: start;
+      color: var(--ink-dark);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .step-number {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(180deg, #f8b8d8, #e79fc9);
+      color: #fff;
+      font-size: 20px;
+      border: 2px solid;
+      border-color: rgba(255,255,255,0.85) rgba(115, 101, 232, 0.65) rgba(115, 101, 232, 0.65) rgba(255,255,255,0.85);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.65);
+    }
+
+    .prompt-card .section-label,
+    .prompt-card .mini-label,
+    .prompt-card .mini-value {
+      color: var(--ink-dark);
+    }
+
+    .prompt-text {
+      margin: 0;
+      white-space: pre-wrap;
+      font-size: 12.5px;
+      line-height: 1.6;
+      background: var(--prompt-bg);
+      color: var(--prompt-text);
+      padding: 14px;
+      border: 2px solid;
+      border-color: #fff #b88cb0 #b88cb0 #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .footer-bar {
+      height: 22px;
+      display: grid;
+      grid-template-columns: 18px minmax(120px, 0.25fr) minmax(70px, 0.08fr) 1fr 18px;
+      background: #efefef;
+      border-top: 2px solid rgba(115, 101, 232, 0.45);
+    }
+
+    .footer-box {
+      border-top: 2px solid rgba(255,255,255,0.75);
+      border-right: 2px solid rgba(115, 101, 232, 0.55);
+      background: #7f74ed;
+    }
+
+    .footer-box.light { background: #f4eff9; }
+
+    .footer-box.arrow {
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .detail-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+        max-height: none;
+      }
+
+      .categories-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+      .categories-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .app-shell { padding: 12px; }
+      .window-body { min-height: auto; }
+      .screen { padding: 18px; }
+      .categories-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: clamp(44px, 17vw, 80px); }
+      .category-title { font-size: 28px; }
+      .detail-headline { font-size: 44px; }
+      .window-tabs { gap: 10px; }
+      .detail-layout { grid-template-columns: 1fr; }
+      .detail-card { order: 1; }
+      .prompt-card { order: 2; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <main class="desktop-window" aria-label="Vocabulary Checklist">
+      <header class="title-bar">
+        <span>Teacher Debs' classes</span>
+        <div class="window-controls" aria-hidden="true">
+          <button class="window-control" type="button">—</button>
+          <button class="window-control" type="button">□</button>
+          <button class="window-control" type="button" id="closeAppBtn">×</button>
+        </div>
+      </header>
+
+      <nav class="window-tabs" aria-label="Navegação principal">
+        <a class="window-tab active" data-tab="home">Home</a>
+        <a class="window-tab" data-tab="vocabulary">Vocabulary</a>
+        <a class="window-tab" data-tab="prompt">Prompt</a>
+      </nav>
+
+      <section class="window-body">
+        <div id="categoriesScreen" class="screen active">
+          <section class="hero">
+            <div class="hero-panel">
+              <span class="hero-kicker">Introduction to</span>
+              <h1 class="hero-title">Vocabulary Checklist</h1>
+              <div class="hero-subtitle">Conversation practice for Teacher Debs' classes</div>
+              <div class="hero-cta-row">
+                <button class="pixel-button" type="button" id="startBtn">Start</button>
+                <button class="pixel-button ghost" type="button" id="randomBtn">Random category</button>
+              </div>
+            </div>
+
+            <aside class="side-card" aria-label="Resumo">
+              <div>
+                <div class="section-label">How it works</div>
+                <p>Choose a category, review the vocabulary, copy the prompt and use it as a guided speaking practice for class.</p>
+              </div>
+              <div class="mini-info-row">
+                <div class="mini-info">
+                  <span class="mini-label">7</span>
+                  <span class="mini-value">categories</span>
+                </div>
+                <div class="mini-info">
+                  <span class="mini-label">1</span>
+                  <span class="mini-value">prompt per page</span>
+                </div>
+              </div>
+              <div class="cursor-mark">↗</div>
+            </aside>
+          </section>
+
+          <section>
+            <div class="categories-header">
+              <div>
+                <div class="section-label">Pick a category</div>
+                <p class="section-copy">Select one topic and open the full category page.</p>
+              </div>
+              <div class="mini-info-row">
+                <div class="mini-info">
+                  <span class="mini-label">Mode</span>
+                  <span class="mini-value">interactive checklist</span>
+                </div>
+                <div class="mini-info">
+                  <span class="mini-label">Use</span>
+                  <span class="mini-value">class + conversation practice</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="categories-grid" id="categoriesGrid"></div>
+          </section>
+        </div>
+
+        <div id="categoryDetailScreen" class="screen">
+          <div class="detail-toolbar">
+            <button class="pixel-button secondary" type="button" id="backBtn">← Back</button>
+            <button class="pixel-button" type="button" id="copyBtnTop">Copy prompt</button>
+          </div>
+
+          <div class="detail-layout">
+            <section class="detail-card">
+              <div>
+                <div class="section-label">Category</div>
+                <h2 class="detail-headline" id="categoryTitle">Expressing Opinions + Feelings</h2>
+                <p class="detail-subcopy" id="categoryDescription"></p>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0;">
+                <div class="section-label">Vocabulary</div>
+                <div class="vocab-grid" id="vocabularyList"></div>
+              </div>
+
+              <div id="stepsCard" class="steps-card">
+                <h3 class="steps-title">Passo a passo</h3>
+                <div class="steps-list" id="stepsList"></div>
+              </div>
+            </section>
+
+            <aside class="prompt-card">
+              <div class="section-label">Prompt</div>
+              <p id="promptText" class="prompt-text"></p>
+              <button class="pixel-button ghost" type="button" id="copyBtn">Copy prompt</button>
+            </aside>
+          </div>
+        </div>
+
+        <footer class="footer-bar" aria-hidden="true">
+          <div class="footer-box arrow">◀</div>
+          <div class="footer-box"></div>
+          <div class="footer-box light"></div>
+          <div class="footer-box"></div>
+          <div class="footer-box arrow">▶</div>
+        </footer>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const categories = {
+      1: {
+        icon: '🟣',
+        title: 'EXPRESSING OPINIONS + FEELINGS',
+        description: 'Practice opinions, feelings and reasons in longer personal answers.',
+        vocabulary: [
+          'To be honest',
+          'In my opinion',
+          'Personally, I think',
+          'I feel really excited',
+          'kind of nervous',
+          'very happy',
+          'a bit tired'
+        ],
+        prompt: `I want to practice expressing opinions and feelings in English.\n\nAsk me personal and opinion-based questions.\n\nRules:\n- I must answer using at least 2 sentences\n- I must include:\n  1. an opinion (e.g. I think / In my opinion)\n  2. a feeling (e.g. I feel...)\n  3. a reason (because / when)\n- If my answer is too short, ask: \"Can you tell me more?\"\n- After I answer:\n  1. Correct my sentence\n  2. Show a more natural version\n  3. Ask a follow-up question\n\nKeep the conversation natural and engaging.`
+      },
+      2: {
+        icon: '🟢',
+        title: 'ROUTINE, HABITS & LIFE',
+        description: 'Practice daily routine, habits and free-time answers with more detail.',
+        vocabulary: [
+          'I usually…',
+          'I hang out with…',
+          'I write down…',
+          'I study because…'
+        ],
+        prompt: `I want to practice talking about my routine and habits.\n\nAsk me questions about my daily life, study routine, and free time.\n\nRules:\n- Never accept short answers\n- Always ask follow-up questions like:\n  \"Why?\", \"How often?\", \"With who?\", \"What do you mean?\"\n- Push me to expand my answers using:\n  because / when / usually\n- After I answer:\n  1. Correct my sentence\n  2. Give a more natural version\n\nMake it feel like a real conversation.`
+      },
+      3: {
+        icon: '🔵',
+        title: 'HYPOTHETICAL SITUATIONS (IF / WOULD)',
+        description: 'Practice conditional answers with personal justifications and follow-ups.',
+        vocabulary: [
+          'If I had…, I would…',
+          'travel abroad',
+          'opportunities',
+          'confidence'
+        ],
+        prompt: `I want to practice hypothetical situations using \"If... I would...\"\n\nGive me different situations.\n\nRules:\n- I must answer using \"I would...\"\n- You must ask follow-up questions to make me explain more\n- Push me to justify my answers (why, what would happen next)\n- If my answer is short, ask me to expand\n- After I answer:\n  1. Correct my sentence\n  2. Show a more natural version\n\nMake the situations interesting and personal.`
+      },
+      4: {
+        icon: '🟡',
+        title: 'TRAVEL & PERSONAL PERSPECTIVE',
+        description: 'Talk about travel, growth and how experiences can change personal perspective.',
+        vocabulary: [
+          'change your perspective',
+          'worldview',
+          'priorities',
+          'rethink',
+          'reconsider',
+          'see things differently'
+        ],
+        steps: [
+          'Copie o prompt abaixo',
+          'Cole no ChatGPT',
+          'Espere ele responder “ready”',
+          'Abra o modo de voz (live conversation)',
+          'Comece a conversar'
+        ],
+        prompt: `You are my English conversation partner.\n\nWe will talk about travel, life experiences, and personal perspectives.\n\nRules:\n- Ask me one question at a time\n- Always ask follow-up questions\n- If my answer is too short, say: \"Can you tell me more?\"\n- Encourage me to explain my ideas deeply\n- Only correct me AFTER I finish speaking\n- Keep the conversation natural and engaging\n\nFocus on topics like:\n- travel experiences\n- how travel changes people\n- personal growth and perspectives\n\nStart with a simple question about travel.\n\nSay \"ready\" when you understand.`
+      },
+      5: {
+        icon: '🔴',
+        title: 'CONNECTORS (EVEN THOUGH / UNLESS / OTHERWISE)',
+        description: 'Practice connector-based speaking with natural follow-up questions.',
+        vocabulary: [
+          'even though',
+          'unless',
+          'otherwise'
+        ],
+        prompt: `I want to practice using connectors: even though, unless, and otherwise.\n\nGive me statements or situations.\n\nRules:\n- I must respond using one of these connectors\n- If I don’t use it, ask me to try again\n- After I answer:\n  1. Correct my sentence\n  2. Show a more natural version\n- Ask follow-up questions to continue the conversation\n\nKeep it conversational, not mechanical.`
+      },
+      6: {
+        icon: '🟠',
+        title: 'ABSTRACT TOPICS (ECONOMY & SOCIETY)',
+        description: 'Practice speaking about economy and society with simple but deeper opinions.',
+        vocabulary: [
+          'inflation',
+          'economic growth',
+          'public spending',
+          'stability',
+          'efficiency'
+        ],
+        prompt: `I want to practice speaking about abstract topics like economy and society.\n\nGive me a short situation or idea, then ask for my opinion.\n\nRules:\n- Keep your explanations simple (B1 level)\n- Ask me what I think\n- Encourage me to explain my ideas, even if I’m not sure\n- Ask follow-up questions to make me go deeper\n- After I answer:\n  1. Correct my English\n  2. Show a clearer and more natural version\n\nFocus on communication, not perfection.`
+      },
+      7: {
+        icon: '🟡',
+        title: 'GUILTY PLEASURES',
+        description: 'Keep it light and personal while practicing casual speaking about preferences and habits.',
+        vocabulary: [
+          'I’m a big fan of…',
+          'I can’t stop…',
+          'It makes me feel…',
+          'It’s not healthy, but…'
+        ],
+        prompt: `I want to practice talking about guilty pleasures.\n\nAsk me questions about food, habits, music, and things I enjoy.\n\nRules:\n- Encourage me to explain WHY I like things\n- Ask fun and personal questions\n- Always ask follow-up questions\n- If my answer is short, ask me to expand\n- After I answer:\n  1. Correct my sentence\n  2. Show a more natural version\n\nKeep it light, natural, and conversational.`
+      }
+    };
+
+    const categoriesScreen = document.getElementById('categoriesScreen');
+    const detailScreen = document.getElementById('categoryDetailScreen');
+    const categoriesGrid = document.getElementById('categoriesGrid');
+    const categoryTitle = document.getElementById('categoryTitle');
+    const categoryDescription = document.getElementById('categoryDescription');
+    const vocabularyList = document.getElementById('vocabularyList');
+    const promptText = document.getElementById('promptText');
+    const stepsCard = document.getElementById('stepsCard');
+    const stepsList = document.getElementById('stepsList');
+    const startBtn = document.getElementById('startBtn');
+    const randomBtn = document.getElementById('randomBtn');
+    const backBtn = document.getElementById('backBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyBtnTop = document.getElementById('copyBtnTop');
+    const closeAppBtn = document.getElementById('closeAppBtn');
+
+    let currentPrompt = '';
+
+    function renderCategories() {
+      categoriesGrid.innerHTML = '';
+
+      Object.entries(categories).forEach(([id, category]) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'category-card';
+        card.innerHTML = `
+          <div class="category-top">
+            <span class="category-index">0${id}</span>
+            <span class="category-icon" aria-hidden="true">${category.icon}</span>
+          </div>
+          <div>
+            <h3 class="category-title">${category.title}</h3>
+            <p class="category-meta">${category.description}</p>
+          </div>
+        `;
+        card.addEventListener('click', () => showCategory(Number(id)));
+        categoriesGrid.appendChild(card);
+      });
+    }
+
+    function renderVocabulary(words) {
+      vocabularyList.innerHTML = '';
+      words.forEach((word, index) => {
+        const item = document.createElement('div');
+        item.className = 'vocab-chip';
+        item.innerHTML = `
+          <span class="vocab-label">item ${String(index + 1).padStart(2, '0')}</span>
+          <span class="vocab-value">${word}</span>
+        `;
+        vocabularyList.appendChild(item);
+      });
+    }
+
+    function renderSteps(steps = []) {
+      stepsList.innerHTML = '';
+      if (!steps.length) {
+        stepsCard.classList.remove('show');
+        return;
+      }
+
+      steps.forEach((step, index) => {
+        const item = document.createElement('div');
+        item.className = 'step-item';
+        item.innerHTML = `
+          <span class="step-number">${index + 1}</span>
+          <span>${step}</span>
+        `;
+        stepsList.appendChild(item);
+      });
+
+      stepsCard.classList.add('show');
+    }
+
+    function showCategory(categoryId) {
+      const category = categories[categoryId];
+      if (!category) return;
+
+      categoryTitle.textContent = category.title;
+      categoryDescription.textContent = category.description;
+      promptText.textContent = category.prompt;
+      currentPrompt = category.prompt;
+
+      renderVocabulary(category.vocabulary || []);
+      renderSteps(category.steps || []);
+
+      categoriesScreen.classList.remove('active');
+      detailScreen.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showCategories() {
+      detailScreen.classList.remove('active');
+      categoriesScreen.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function copyPrompt() {
+      if (!currentPrompt) return;
+      try {
+        await navigator.clipboard.writeText(currentPrompt);
+        const original = copyBtn.textContent;
+        const originalTop = copyBtnTop.textContent;
+        copyBtn.textContent = 'Copied!';
+        copyBtnTop.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = original;
+          copyBtnTop.textContent = originalTop;
+        }, 1400);
+      } catch (error) {
+        alert('Não foi possível copiar automaticamente.');
+      }
+    }
+
+    function openFirstCategory() { showCategory(1); }
+
+    function openRandomCategory() {
+      const ids = Object.keys(categories);
+      const randomId = ids[Math.floor(Math.random() * ids.length)];
+      showCategory(Number(randomId));
+    }
+
+    function closeApp() { showCategories(); }
+
+    document.querySelectorAll('.window-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.window-tab').forEach((item) => item.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+
+    startBtn.addEventListener('click', openFirstCategory);
+    randomBtn.addEventListener('click', openRandomCategory);
+    backBtn.addEventListener('click', showCategories);
+    copyBtn.addEventListener('click', copyPrompt);
+    copyBtnTop.addEventListener('click', copyPrompt);
+    closeAppBtn.addEventListener('click', closeApp);
+
+    renderCategories();
+  </script>
+</body>
+</html>
